@@ -1,0 +1,26 @@
+$main-color: #4B021D;
+$secondary-color: #BABABA;
+
+@import "~bootstrap/scss/bootstrap";
+
+
+.navbar {
+    background-color: $secondary-color;
+    height: 3rem;
+    padding: 0px;
+    justify-content: flex-start;
+}
+
+.navbar a {
+    color: $main-color;
+    text-decoration: none;
+    font-size: 2rem;
+    padding: 0px;
+}
+
+.navbar img {
+    margin: 0.3rem;
+    margin-right: 1rem;
+    size: 2.4rem;
+    height: 2.4rem;
+}
