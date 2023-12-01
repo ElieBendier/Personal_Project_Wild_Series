@@ -1,26 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}All programs
+{% block title %}
+	{{ parent() }}
+	- Séries
 {% endblock %}
 
 {% block body %}
-	<h1>Toutes les séries de la table program :
+	<h1 class="page-title">Toutes les séries !
 	</h1>
-	{% for program in programs %}
-		<div>
-			<h2>{{ loop.index }}
-				/
-				{{ program.title }}
-				- Catégorie :
-				{{ program.category.name }}</h2>
-			<p>{{ program.synopsis }}</p>
-			<a href="{{ path("program_show", { id: program.id }) }}">Voir la fiche</a>
-		</div>
-	{% else %}
-		Aucune série trouvée.
-	{% endfor %}
+	<div class="row">
+		{% for program in programs %}
+			<div class="col-sm-3">
+				<div class="card">
+					<img class="card-img-top" src="{{ asset(program.poster) }}" alt="Poster of the program">
+					<div class="card-body">
+						<h2 class="card-title">
+							{{ program.title }}</h2>
+						<h3 class="card-subtitle mb-2 text-muted">
+							<span>{{ program.year }}</span>
+							<span>{{ program.category.name }}</span>
+						</h3>
+						<p class="card-text">{{ program.synopsis }}</p>
+					</div>
+					<a href="{{ path("program_show", { id: program.id }) }}" class="btn btn-dark">Voir la fiche</a>
+				</div>
+			</div>
 
-	<a href="{{ path('app_index') }}">
+		{% else %}
+			Aucune série trouvée.
+		{% endfor %}
+	</div>
+	<div class="add-program">
+		<p>La série que vous recherchez n'existe pas encore ?
+			<a href="{{ path("program_new") }}">Ajoutez-la !</a>
+		</p>
+	</div>
+	<a href="{{ path('app_index') }}" class="back-home">
 		Retour à l'accueil
 	</a>
+
 {% endblock %}

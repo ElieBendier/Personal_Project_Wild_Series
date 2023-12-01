@@ -4,20 +4,32 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Toutes les catégories de la table category :
+	<h1 class="page-title">Toutes les catégories !
 	</h1>
-	{% for category in categories %}
-		<div>
-			<h2>{{ loop.index }}
-				/
-				{{ category.name }}</h2>
-			<a href="{{ path("category_show", { categoryName: category.name }) }}">Voir les séries</a>
-		</div>
-	{% else %}
-		Aucune catégorie trouvée.
-	{% endfor %}
+	<div class="row">
+		{% for category in categories %}
+			<div class="col-sm-3">
+				<div class="card">
+					<div class="card-body">
+						<h2 class="card-title">
+							{{ category.name }}</h2>
+					</div>
+					<a href="{{ path("category_show", { categoryName: category.name }) }}" class="btn btn-dark">Voir les séries</a>
+				</div>
+			</div>
 
-	<a href="{{ path('app_index') }}">
+		{% else %}
+			Aucune catégorie trouvée.
+		{% endfor %}
+	</div>
+	<div class="add-category">
+		<p>La catégorie que vous recherchez n'existe pas encore ?
+			<a href="{{ path("category_new") }}">Ajoutez-la !</a>
+		</p>
+	</div>
+
+	<a href="{{ path('app_index') }}" class="back-home">
 		Retour à l'accueil
 	</a>
+
 {% endblock %}

@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\EpisodeRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EpisodeRepository::class)]
 class Episode
@@ -16,12 +17,17 @@ class Episode
 
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le nom de l\épisode est obligatoire')]
+    #[Assert\Length(max: 255, maxMessage: 'La nom saisi {{ value }} est trop long, il ne devrait pas dépasser {{ limit }} caractères')]
     private ?string $title = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Le numéro de l\épisode est obligatoire')]
+    #[Assert\Positive]
     private ?int $number = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'Le synopsis de l\épisode est obligatoire')]
     private ?string $synopsis = null;
 
     #[ORM\ManyToOne(inversedBy: 'episodes')]

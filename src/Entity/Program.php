@@ -7,8 +7,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ProgramRepository::class)]
+#[UniqueEntity(
+fields: ['title'],
+errorPath: 'title',
+message: 'Cette série existe déjà.',)]
 class Program
 {
     #[ORM\Id]
@@ -17,12 +23,22 @@ class Program
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le nom de la série est obligatoire')]
+    #[Assert\Length(max: 255, maxMessage: 'Le nom saisi {{ value }} est trop long, il ne devrait pas dépasser {{ limit }} caractères')]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'Le synopsis de la série est obligatoire')]
+    #[Assert\Regex(
+        pattern: '/plus belle la vie/',
+        match: false,
+        message: 'On parle de vraies séries ici',
+    )]
     private ?string $synopsis = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(message: 'L\'affiche de la série est obligatoire')]
+    #[Assert\Length(max: 255, maxMessage: 'Le chemin saisi {{ value }} est trop long, il ne devrait pas dépasser {{ limit }} caractères')]
     private ?string $poster = null;
 
     #[ORM\ManyToOne(inversedBy: 'programs')]
@@ -31,9 +47,14 @@ class Program
 
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message: 'Le pays de la série est obligatoire')]
+    #[Assert\Length(max: 100, maxMessage: 'Le pays indiqué {{ value }} est trop long, il ne devrait pas dépasser {{ limit }} caractères')]
+
     private ?string $country = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'L\'année de sortie de la série est obligatoire')]
+    #[Assert\GreaterThan(1940)]
     private ?int $year = null;
 
     #[ORM\OneToMany(mappedBy: 'program', targetEntity: Season::class, orphanRemoval: true)]

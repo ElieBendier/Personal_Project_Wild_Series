@@ -1,4 +1,17 @@
-<nav class="navbar">
-	<img src="{{ asset('/build/images/favicon.0df8cf69.png') }}" alt=""/>
+<nav class="navbar navbar-expand-lg navbar-light">
+	<img src="{{ asset('/build/images/favicon.0df8cf69.png') }}" alt="Logo contenant les initiales du site"/>
 	<a class="navbar-brand" href="/">Wild Séries</a>
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item">
+				<a class="nav-link" href="/">Accueil</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{{ path('program_index') }}">Séries</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{{ path('category_index') }}">Catégories</a>
+			</li>
+		</ul>
+	</div>
 </nav>

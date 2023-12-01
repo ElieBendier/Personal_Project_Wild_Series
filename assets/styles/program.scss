@@ -1,0 +1,153 @@
+$main-color: #4B021D;
+$secondary-color: #BABABA;
+$card-color: #fdf0d5;
+$third-color: rgb(26, 26, 26);
+
+@import "~bootstrap/scss/bootstrap";
+
+body {
+    background-color: $main-color;
+}
+
+h1 {
+    color: $secondary-color;
+}
+
+.row {
+    margin-left: 3%;
+    margin-right: 3%;
+}
+
+.card {
+    margin-bottom: 10%;
+    background-color: $card-color;
+}
+
+.card-body {
+    font-family: 'Lato';
+    color: black;
+}
+
+.card-body h2 {
+    font-size: 1.8rem;
+}
+
+.card-subtitle {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+}
+
+.card-img-top {
+    height: 10rem;
+}
+
+.card-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-justify: inter-word;
+}
+
+.program,
+.season,
+.episode {
+    background-color: $card-color;
+    margin-left: 3%;
+    margin-right: 3%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border-radius: 5px;
+}
+
+.program-poster {
+    padding-top: 5%;
+    padding-bottom: 5%;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    width: 30%;
+    height: 25%;
+}
+
+.program-body,
+.season-body,
+.episode-body {
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 5%;
+}
+
+.program-body h1,
+.season-body h1,
+.episode-body h1 {
+    color: black;
+}
+
+.program-body li a,
+.season-body li a {
+    color: $main-color;
+}
+
+.back {
+    padding-bottom: 0.5rem;
+    padding-right: 0.5rem;
+    text-align: right;
+}
+
+.back a {
+    color: $main-color;
+}
+
+.add-category,
+.add-program {
+    margin-left: 3%;
+}
+
+.add-category p,
+.add-program p,
+.add-category a,
+.add-program a {
+    color: $card-color;
+}
+
+.add-form {
+    background-color: $card-color;
+    border-radius: 5px;
+    margin-left: 3%;
+    margin-right: 3%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.add-form form {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.add-form button {
+    background-color: $third-color;
+    color: $secondary-color;
+    border-radius: 5px;
+    width: 8rem;
+    height: 2.5rem;
+    margin-top: 1rem;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    box-shadow: none;
+    border-style: none;
+}
+
+.page-title {
+    font-family: 'Lato';
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.back-home {
+    margin-left: 3%;
+    color: $card-color;
+}

@@ -1,0 +1,22 @@
+$main-color: #4B021D;
+$secondary-color: #BABABA;
+$card-color: #fdf0d5;
+
+#homepage {
+    background-image: url("/assets/images/homepage.png");
+    height: 35.9rem;
+    background-size: cover;
+}
+
+#webpage-name {
+    padding-left: 15%;
+    padding-top: 2%;
+    padding-right: 17%;
+}
+
+#homepage p {
+    font-size: 8rem;
+    text-align: center;
+    color: $main-color;
+    font-family: 'Montaga';
+}

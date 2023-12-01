@@ -5,11 +5,15 @@ namespace App\Controller;
 use App\Entity\Program;
 use App\Entity\Season;
 use App\Entity\Episode;
+use App\Form\ProgramType;
 use App\Repository\ProgramRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 #[Route('/program', name: 'program_')]
 Class ProgramController extends AbstractController
@@ -28,6 +32,26 @@ Class ProgramController extends AbstractController
     {
         return $this->render('program/show.html.twig', [
             'program' => $program,
+        ]);
+    }
+
+    #[Route('/new', name: 'new')]
+    public function new(Request $request, Program $program, EntityManagerInterface $entityManager) : Response
+    {
+        $form = $this->createForm(ProgramType::class, $program);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($program);
+            $entityManager->flush(); 
+
+            $this->addFlash('success', 'La série a bien été ajoutée ! Merci !');
+
+            return $this->redirectToRoute('program_index');
+        }
+    
+        return $this->render('program/new.html.twig', [
+            'form' => $form,
         ]);
     }
 
@@ -52,4 +76,25 @@ Class ProgramController extends AbstractController
             'episode' => $episode,
         ]);
     }
+
+    #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Program $program, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(ProgramType::class, $program);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            $this->addFlash('success', 'La série a bien été modifiée ! Merci !');
+
+            return $this->redirectToRoute('program_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('program/edit.html.twig', [
+            'program' => $program,
+            'form' => $form,
+        ]);
+    }
+
 }

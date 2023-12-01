@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SeasonRepository::class)]
 class Season
@@ -17,12 +18,17 @@ class Season
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Le numéro de la saison est obligatoire')]
+    #[Assert\Positive]
     private ?int $number = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'L\'année de sortie de la saison est obligatoire')]
+    #[Assert\GreaterThan(1940)]
     private ?int $year = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'Le résumé de la saison est obligatoire')]
     private ?string $description = null;
 
 

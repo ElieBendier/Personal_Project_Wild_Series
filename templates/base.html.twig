@@ -3,12 +3,17 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			{% block title %}Welcome!
+			{% block title %}Wild Séries
 			{% endblock %}
 		</title>
 		<link rel="icon" href="/build/images/favicon.0df8cf69.png">
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
+			<link rel="preconnect" href="https://fonts.googleapis.com">
+			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+			<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
+			<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+			<link href="https://fonts.googleapis.com/css2?family=Lato&family=Montaga&display=swap" rel="stylesheet">
 		{% endblock %}
 
 		{% block javascripts %}
@@ -18,6 +23,13 @@
 	<body>
 		<header>
 			{% include "/components/_navbar.html.twig" %}
+			{% for category, messages in app.flashes %}
+				{% for message in messages %}
+					<div class="alert alert-{{ category }}">
+						{{ message }}
+					</div>
+				{% endfor %}
+			{% endfor %}
 		</header>
 		{% block body %}{% endblock %}
 	</body>

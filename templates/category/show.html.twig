@@ -5,14 +5,25 @@
 
 {% block body %}
 	{% if category %}
-		{% for program in programs %}
-			<div>
-				<h2>{{ program.id }}/
-					{{ program.title }}</h2>
-				<p>{{ program.synopsis }}</p>
-				<a href="{{ path("program_show", { id: program.id }) }}">Voir la fiche</a>
-			</div>
-		{% endfor %}
+		<div class="row">
+			{% for program in programs %}
+				<div class="col-sm-3">
+					<div class="card">
+						<img class="card-img-top" src="{{ asset(program.poster) }}" alt="Poster of the program">
+						<div class="card-body">
+							<h2 class="card-title">
+								{{ program.title }}</h2>
+							<h3 class="card-subtitle mb-2 text-muted">
+								<span>{{ program.year }}</span>
+								<span>{{ program.category.name }}</span>
+							</h3>
+							<p class="card-text">{{ program.synopsis }}</p>
+						</div>
+						<a href="{{ path("program_show", { id: program.id }) }}" class="btn btn-dark">Voir la fiche</a>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
 	{% endif %}
 	{% if programs is empty %}
 		<p>Aucune série trouvée</p>

@@ -1,21 +1,27 @@
 $main-color: #4B021D;
 $secondary-color: #BABABA;
+$third-color: rgb(26, 26, 26);
 
 @import "~bootstrap/scss/bootstrap";
 
 
 .navbar {
-    background-color: $secondary-color;
+    background-color: $third-color;
     height: 3rem;
-    padding: 0px;
+    display: flex;
     justify-content: flex-start;
 }
 
 .navbar a {
-    color: $main-color;
+    color: $secondary-color;
     text-decoration: none;
     font-size: 2rem;
-    padding: 0px;
+    padding: 0px 0px;
+    font-family: 'Montaga';
+}
+
+.navbar a:hover {
+    color: $main-color;
 }
 
 .navbar img {
@@ -23,4 +29,8 @@ $secondary-color: #BABABA;
     margin-right: 1rem;
     size: 2.4rem;
     height: 2.4rem;
+}
+
+.nav-item {
+    margin-left: 3rem;
 }
