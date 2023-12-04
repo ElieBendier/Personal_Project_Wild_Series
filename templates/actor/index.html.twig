@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	- Acteurs
+{% endblock %}
+
+{% block body %}
+	<h1 class="page-title">Tous les acteurs !
+	</h1>
+	<div class="row">
+		{% for actor in actors %}
+			<div class="col-sm-3">
+				<div class="card">
+					<img class="card-img-top" src="{{ asset(actor.profil) }}" alt="profil picture of the actor">
+					<div class="card-body">
+						<h2 class="card-title">
+							{{ actor.name }}</h2>
+						<p class="card-text">
+							Séries :
+							<ul>
+								{% for program in actor.programs %}
+									<li>
+										{{ program.title }}
+									</li>
+								{% endfor %}
+							</ul>
+						</p>
+					</div>
+					<a href="{{ path("actor_show", { id: actor.id }) }}" class="btn btn-dark">Voir la fiche</a>
+				</div>
+			</div>
+
+		{% else %}
+			Aucun acteur trouvé.
+		{% endfor %}
+	</div>
+	<div class="add-program">
+		<p>L'acteur que vous recherchez n'est pas présent ?
+			<a href="{{ path("program_new") }}">Ajoutez sa fiche !</a>
+		</p>
+	</div>
+	<a href="{{ path('app_index') }}" class="back-home">
+		Retour à l'accueil
+	</a>
+{% endblock %}

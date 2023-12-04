@@ -6,6 +6,7 @@ use App\Entity\Program;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ProgramFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -20,6 +21,16 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         ['title' => 'Peaky Blinders', 'synopsis' => 'En 1919, à Birmingham, soldats, révolutionnaires, politiques et criminels combattent pour se faire une place dans le paysage industriel de l\'après-guerre. Le Parlement s\'attend à une violente révolte, et Winston Churchill mobilise des forces spéciales pour contenir les menaces.', 'category' => 'Historique', 'poster' => '/build/images/peaky_blinders.a7192e77.jpg',  'country' => 'Angleterre', 'year' => 2013],
         ['title' => 'Dr House', 'synopsis' => 'Le docteur House est un célèbre diagnosticien travaillant à l\'hôpital de Princeton. Secondé par une équipe de trois jeunes gens (des spécialistes dans le genre), il tente de découvrir les maladies qui rongent ses patients. Son credo : concevoir les symptômes comme des indices le menant petit à petit au coupable.', 'category' => 'Comédie', 'poster' => '/build/images/dr_house.f03fd273.jpg',  'country' => 'Etats-Unis', 'year' => 2004],
     ];
+
+    private SluggerInterface $slugger;
+
+    public function __construct(SluggerInterface $slugger)
+    {
+        $this->slugger = $slugger;
+    }
+
+
+
     public function load(ObjectManager $manager)
     {
         $i=0;
@@ -31,8 +42,10 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
             $program->setCountry($programName['country']);
             $program->setYear($programName['year']);
             $program->setPoster($programName['poster']);
+            $slug = $this->slugger->slug($programName['title']);
+            $program->setSlug($slug);
             $program->setCategory($this->getReference('category_'.$programName['category']));
-            $this->addReference('program_'.$i.'', $program);
+            $this->addReference('program_'.$i, $program);
             $manager->persist($program);
         }
         $manager->flush();
