@@ -35,6 +35,8 @@ class Episode
     private ?Season $season = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'La durée de l\épisode est obligatoire')]
+    #[Assert\Positive]
     private ?int $duration = null;
 
     #[ORM\Column(length: 255)]

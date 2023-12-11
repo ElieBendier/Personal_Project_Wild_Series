@@ -11,34 +11,23 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
-class ProgramType extends AbstractType
+class ActorType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title')
-            ->add('synopsis')
-            ->add('country')
-            ->add('year')
-            ->add('posterFile', VichFileType::class, [
+            ->add('name')
+            ->add('profileFile', VichFileType::class, [
                 'required'      => false,
                 'allow_delete'  => true,
                 'download_uri' => true,
-            ])
-            ->add('category', EntityType::class, ['class' => Category::class, 'choice_label' => 'name'])
-            ->add('actors', EntityType::class, [
-                'class' => Actor::class,
-                'choice_label' => 'name',
-                'multiple' => true,
-                'expanded' => true,
-                'by_reference' => false,
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Program::class,
+            'data_class' => Actor::class,
         ]);
     }
 }

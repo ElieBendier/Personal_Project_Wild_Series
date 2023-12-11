@@ -151,3 +151,14 @@ h1 {
     margin-left: 3%;
     color: $card-color;
 }
+
+.mail {
+    color: $main-color;
+    font-family: 'Lato';
+    background-color: $card-color;
+}
+
+.mail h1,
+.mail a {
+    text-align: center;
+}

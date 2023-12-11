@@ -1,0 +1,26 @@
+{% extends "layoutEmail.html.twig" %}
+
+
+{% block title %}
+	{{ parent() }}
+	- Nouvel épisode à découvrir !
+{% endblock %}
+{% block body %}
+	<div class="mail">
+		<h1>Un nouvel épisode a été ajouté à la saison
+			{{ episode.season.number }}
+			de la série
+			{{ episode.season.program.title }}
+			! Il s'agit de :
+			{{ episode.title }}</h1>
+		<p>Hey, l'épisode
+			{{ episode.title }}
+			vient d'être ajoutée à Wild Series !</p>
+		<p>Synopsis :
+			{{episode.synopsis }}</p>
+
+		<p>
+			<a href="http://127.0.0.1:8000/episode/show/{{ episode.slug }}">Regarde la !</a>
+		</p>
+	</div>
+{% endblock %}

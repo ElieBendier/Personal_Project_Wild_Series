@@ -13,14 +13,14 @@
 				{{ program.category.name }}</p>
 			Liste des saisons :
 			<ul>
-
 				{% for seasons in program.seasons %}
 					<li>
-						<a href='/program/{{program.id}}/season/{{seasons.id}}'>Saison
+						<a href='/program/{{program.slug}}/season/{{seasons.id}}'>Saison
 							{{ seasons.number }}</a>
 					</li>
 				{% endfor %}
 			</ul>
+			<p>{{ programDuration }}</p>
 			<strong>Acteurs :</strong>
 			<ul>
 				{% for actor in program.actors %}

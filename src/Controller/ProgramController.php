@@ -16,6 +16,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use App\Service\ProgramDuration;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 #[Route('/program', name: 'program_')]
 Class ProgramController extends AbstractController
@@ -29,7 +31,7 @@ Class ProgramController extends AbstractController
          ]);
     }
 
-    #[Route('/show/{id<^[0-9]+$>}', name: 'show')]
+    #[Route('/show/{slug}', name: 'show')]
     public function show(Program $program, ProgramDuration $programDuration): Response
     {
         return $this->render('program/show.html.twig', [
@@ -39,7 +41,7 @@ Class ProgramController extends AbstractController
     }
 
     #[Route('/new', name: 'new')]
-    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger) : Response
+    public function new(Request $request, EntityManagerInterface $entityManager, MailerInterface $mailer, SluggerInterface $slugger) : Response
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
@@ -51,6 +53,14 @@ Class ProgramController extends AbstractController
             $entityManager->persist($program);
             $entityManager->flush(); 
 
+            $email = (new Email())
+                    ->from($this->getParameter('mailer_from'))
+                    ->to($this->getParameter('mailer_from'))
+                    ->subject('Une nouvelle série vient d\'être publiée !')
+                    ->html($this->renderView('Program/newProgramEmail.html.twig', ['program' => $program]));
+    
+            $mailer->send($email);
+
             $this->addFlash('success', 'La série a bien été ajoutée ! Merci !');
 
             return $this->redirectToRoute('program_index');
@@ -61,8 +71,8 @@ Class ProgramController extends AbstractController
         ]);
     }
 
-    #[Route('/{programId}/season/{seasonId}', name: 'season_show')]
-    public function showSeason(#[MapEntity(mapping: ['programId' => 'id'])] Program $program, 
+    #[Route('/{programSlug}/season/{seasonId}', name: 'season_show')]
+    public function showSeason(#[MapEntity(mapping: ['programSlug' => 'slug'])] Program $program, 
     #[MapEntity(mapping: ['seasonId' => 'id'])] Season $season)
     {
         return $this->render('program/season_show.html.twig', [
@@ -71,10 +81,10 @@ Class ProgramController extends AbstractController
         ]);
     }
 
-    #[Route('/{programId}/season/{seasonId}/episode/{episodeId}', name: 'episode_show')]
-    public function showEpisode(#[MapEntity(mapping: ['programId' => 'id'])] Program $program, 
+    #[Route('/{programSlug}/season/{seasonId}/episode/{episodeSlug}', name: 'episode_show')]
+    public function showEpisode(#[MapEntity(mapping: ['programSlug' => 'slug'])] Program $program, 
     #[MapEntity(mapping: ['seasonId' => 'id'])] Season $season,
-    #[MapEntity(mapping: ['episodeId' => 'id'])] Episode $episode)
+    #[MapEntity(mapping: ['episodeSlug' => 'slug'])] Episode $episode)
     {
         return $this->render('program/episode_show.html.twig', [
             'program' => $program,
@@ -104,5 +114,4 @@ Class ProgramController extends AbstractController
             'form' => $form,
         ]);
     }
-
 }

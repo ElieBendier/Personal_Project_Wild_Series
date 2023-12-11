@@ -6,8 +6,12 @@ use App\Repository\ActorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ActorRepository::class)]
+#[Vich\Uploadable] 
+
 class Actor
 {
     #[ORM\Id]
@@ -22,7 +26,10 @@ class Actor
     private Collection $programs;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $profil = null;
+    private ?string $profile = null;
+
+    #[Vich\UploadableField(mapping: 'profile_file', fileNameProperty: 'profile')]
+    private ?File $profileFile = null;
 
     public function __construct()
     {
@@ -70,15 +77,26 @@ class Actor
         return $this;
     }
 
-    public function getProfil(): ?string
+    public function getProfile(): ?string
     {
-        return $this->profil;
+        return $this->profile;
     }
 
-    public function setProfil(?string $profil): static
+    public function setProfile(?string $profile): static
     {
-        $this->profil = $profil;
+        $this->profile = $profile;
 
         return $this;
+    }
+
+    public function setProfileFile(File $image = null): Actor
+    {
+        $this->profileFile = $image;
+        return $this;
+    }
+
+    public function getProfileFile(): ?File
+    {
+        return $this->profileFile;
     }
 }

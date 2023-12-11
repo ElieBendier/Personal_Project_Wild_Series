@@ -12,7 +12,7 @@
 		{% for actor in actors %}
 			<div class="col-sm-3">
 				<div class="card">
-					<img class="card-img-top" src="{{ asset(actor.profil) }}" alt="profil picture of the actor">
+					<img class="card-img-top" src="{{ vich_uploader_asset(actor) }}" alt="profil picture of the actor">
 					<div class="card-body">
 						<h2 class="card-title">
 							{{ actor.name }}</h2>
@@ -37,7 +37,7 @@
 	</div>
 	<div class="add-program">
 		<p>L'acteur que vous recherchez n'est pas présent ?
-			<a href="{{ path("program_new") }}">Ajoutez sa fiche !</a>
+			<a href="{{ path("actor_new") }}">Ajoutez sa fiche !</a>
 		</p>
 	</div>
 	<a href="{{ path('app_index') }}" class="back-home">

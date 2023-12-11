@@ -11,16 +11,16 @@ use Faker\Factory;
 class ActorFixtures extends Fixture implements DependentFixtureInterface
 {
     const ACTORS = [
-        ['profil' => '/build/images/acteur1.1080ade4.jpg'],
-        ['profil' => '/build/images/acteur2.69f5612c.jpg'],
-        ['profil' => '/build/images/acteur3.f35d2a06.jpg'],
-        ['profil' => '/build/images/acteur4.43cf455a.jpg'],
-        ['profil' => '/build/images/acteur5.ef1a4127.jpg'],
-        ['profil' => '/build/images/acteur6.7b00b873.jpg'],
-        ['profil' => '/build/images/acteur7.ac96ad7f.jpg'],
-        ['profil' => '/build/images/acteur8.8855746e.jpg'],
-        ['profil' => '/build/images/acteur9.2395678f.jpg'],
-        ['profil' => '/build/images/acteur10.04e9817b.jpg'],
+        ['profile' => 'acteur1.jpg'],
+        ['profile' => 'acteur2.jpg'],
+        ['profile' => 'acteur3.jpg'],
+        ['profile' => 'acteur4.jpg'],
+        ['profile' => 'acteur5.jpg'],
+        ['profile' => 'acteur6.jpg'],
+        ['profile' => 'acteur7.jpg'],
+        ['profile' => 'acteur8.jpg'],
+        ['profile' => 'acteur9.jpg'],
+        ['profile' => 'acteur10.jpg'],
     ];
     public function load(ObjectManager $manager): void
     {
@@ -28,7 +28,7 @@ class ActorFixtures extends Fixture implements DependentFixtureInterface
             foreach(self::ACTORS as $actorName){
             $actor = new Actor();
             $actor->setName($faker->name());
-            $actor->setProfil($actorName['profil']);
+            $actor->setProfile($actorName['profile']);
             $program1 = rand(1, 9);
             $program2 = rand(1, 9);
             if ($program1 === $program2) {

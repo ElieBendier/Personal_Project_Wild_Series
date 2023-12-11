@@ -19,7 +19,7 @@
 							</h3>
 							<p class="card-text">{{ program.synopsis }}</p>
 						</div>
-						<a href="{{ path("program_show", { id: program.id }) }}" class="btn btn-dark">Voir la fiche</a>
+						<a href="{{ path("program_show", { slug: program.slug }) }}" class="btn btn-dark">Voir la fiche</a>
 					</div>
 				</div>
 			{% endfor %}

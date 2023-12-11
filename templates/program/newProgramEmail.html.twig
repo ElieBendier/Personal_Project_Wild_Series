@@ -1,0 +1,22 @@
+{% extends "layoutEmail.html.twig" %}
+
+
+{% block title %}
+	{{ parent() }}
+	- Nouvelle série à découvrir !
+{% endblock %}
+{% block body %}
+	<div class="mail">
+		<h1>Une nouvelle série a été ajoutée ! Il s'agit de :
+			{{ program.title }}</h1>
+		<p>Hey, la série
+			{{ program.title }}
+			vient d'être ajoutée à Wild Series !</p>
+		<p>Synopsis :
+			{{program.synopsis }}</p>
+
+		<p>
+			<a href="http://127.0.0.1:8000/program/show/{{ program.slug }}">Regarde la !</a>
+		</p>
+	</div>
+{% endblock %}

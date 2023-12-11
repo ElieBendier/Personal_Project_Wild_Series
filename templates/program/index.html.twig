@@ -12,7 +12,7 @@
 		{% for program in programs %}
 			<div class="col-sm-3">
 				<div class="card">
-					<img class="card-img-top" src="{{ asset(program.poster) }}" alt="Poster of the program">
+					<img class="card-img-top" src="{{ vich_uploader_asset(program) }}" alt="Poster of the program">
 					<div class="card-body">
 						<h2 class="card-title">
 							{{ program.title }}</h2>
@@ -22,7 +22,7 @@
 						</h3>
 						<p class="card-text">{{ program.synopsis }}</p>
 					</div>
-					<a href="{{ path("program_show", { id: program.id }) }}" class="btn btn-dark">Voir la fiche</a>
+					<a href="{{ path("program_show", { slug: program.slug }) }}" class="btn btn-dark">Voir la fiche</a>
 				</div>
 			</div>
 

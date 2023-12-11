@@ -11,6 +11,7 @@ use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use App\Form\ActorType;
 
 #[Route('/actor', name: 'actor_')]
 Class ActorController extends AbstractController
@@ -31,6 +32,27 @@ Class ActorController extends AbstractController
     {
         return $this->render('actor/show.html.twig', [
             'actor' => $actor,
+        ]);
+    }
+
+    #[Route('/new', name: 'new')]
+    public function new(Request $request, EntityManagerInterface $entityManager) : Response
+    {
+        $actor = new Actor();
+        $form = $this->createForm(ActorType::class, $actor);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($actor);
+            $entityManager->flush(); 
+
+            $this->addFlash('success', 'L\'acteur a bien été ajouté ! Merci !');
+
+            return $this->redirectToRoute('actor_index');
+        }
+    
+        return $this->render('actor/new.html.twig', [
+            'form' => $form,
         ]);
     }
 }
