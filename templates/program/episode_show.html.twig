@@ -11,7 +11,7 @@
 
 {% block body %}
 	<div class="episode">
-		<img class="program-poster" src="{{program.poster}}" alt="{{ program.title }} poster">
+		<img class="program-poster" src="{{ vich_uploader_asset(program) }}" alt="{{ program.title }} poster">
 		<div class="episode-body">
 			<h1>
 				Episode
@@ -23,6 +23,24 @@
 			</h1>
 			<h2>{{ episode.title }}</h2>
 			<p>{{ episode.synopsis }}</p>
+			{% if app.user %}
+				<h3>
+					Ajouter un commentaire</h3>
+				{% form_theme form 'bootstrap_5_horizontal_layout.html.twig' %}
+				<div class="add-form">
+					{{ form_start(form) }}
+					{{ form_widget(form) }}
+					<button type="submit">Commenter !</button>
+					{{ form_end(form) }}
+				</div>
+			{% endif %}
+			{% for comment in episode.comments | sort((a, b) => a.createdat <=> b.createdat) | reverse %}
+				<h4>{{comment.author.username}}</h4>
+				<h5>{{comment.rate}}/10</h5>
+				<p>{{comment.comment}}</p>
+				<p>Ajouté le
+					{{comment.createdat|date('d-m-Y à h:i:s')}}</p>
+			{% endfor %}
 		</div>
 		<div class="back">
 			<a href="{{ path('program_season_show', {"programSlug": program.slug, "seasonId": season.id })}}">

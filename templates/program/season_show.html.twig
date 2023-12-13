@@ -10,7 +10,7 @@
 
 {% block body %}
 	<div class="season">
-		<img class="program-poster" src="{{program.poster}}" alt="{{ program.title }} poster">
+		<img class="program-poster" src="{{ vich_uploader_asset(program) }}" alt="{{ program.title }} poster">
 		<div class="season-body">
 			<h1>Saison
 				{{ season.number }}

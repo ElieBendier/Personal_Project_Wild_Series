@@ -2,11 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Program;
 use App\Entity\Season;
 use App\Entity\Episode;
+use App\Form\CommentType;
 use App\Form\ProgramType;
 use App\Repository\ProgramRepository;
+use App\Repository\CommentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,6 +19,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use App\Service\ProgramDuration;
+use DateTimeImmutable;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
@@ -84,12 +88,27 @@ Class ProgramController extends AbstractController
     #[Route('/{programSlug}/season/{seasonId}/episode/{episodeSlug}', name: 'episode_show')]
     public function showEpisode(#[MapEntity(mapping: ['programSlug' => 'slug'])] Program $program, 
     #[MapEntity(mapping: ['seasonId' => 'id'])] Season $season,
-    #[MapEntity(mapping: ['episodeSlug' => 'slug'])] Episode $episode)
+    #[MapEntity(mapping: ['episodeSlug' => 'slug'])] Episode $episode,
+    CommentRepository $commentRepository, Request $request, EntityManagerInterface $entityManager)
     {
+        $comment = new Comment();
+        $date = new DateTimeImmutable('Europe/Paris');
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setAuthor($this->getUser());
+            $comment->setEpisode($episode);
+            $comment->setCreatedAt($date);
+            $entityManager->persist($comment);
+            $entityManager->flush(); 
+        }
+
         return $this->render('program/episode_show.html.twig', [
             'program' => $program,
             'season' => $season,
             'episode' => $episode,
+            'form' => $form,
         ]);
     }
 
